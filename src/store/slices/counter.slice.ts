@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState, AppThunk } from '..';
+import type { AppThunk, RootState } from '..';
 
 // dummy api
 export function fetchCount(amount = 1) {

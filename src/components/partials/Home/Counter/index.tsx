@@ -1,12 +1,11 @@
 import { Button, InputNumber } from 'antd';
-import React from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
-  setAmount,
   incrementAsync,
   incrementIfOdd,
   selectCount,
+  setAmount,
 } from '../../../../store/slices/counter.slice';
 
 const Counter = () => {

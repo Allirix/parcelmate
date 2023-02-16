@@ -5,7 +5,8 @@
     "airbnb/hooks",
     "airbnb-typescript",
     "plugin:eslint-comments/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react/jsx-runtime"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -15,9 +16,7 @@
     "jest": true,
     "es6": true
   },
-  "plugins": [
-    "prettier"
-  ],
+  "plugins": ["prettier"],
   "rules": {
     "react/function-component-definition": "off",
     "@typescript-eslint/indent": "off",

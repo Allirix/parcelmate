@@ -1,8 +1,8 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable import/no-extraneous-dependencies */
 
-import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
+import React, { FC, ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './store';
