@@ -1,4 +1,3 @@
-import React from 'react';
 import randomIntFromInterval from '../../../common/random-number.helper';
 
 const Quote = () => {
