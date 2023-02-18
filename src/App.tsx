@@ -1,19 +1,12 @@
-import { Link } from 'react-router-dom';
+import AppShell from './components/shareds/AppShell';
 import Router from './routes';
 import './styles/vendors.scss';
 
 const App = () => (
   <main>
-    <p>App Works!</p>
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-    </ul>
-    <Router />
+    <AppShell>
+      <Router />
+    </AppShell>
   </main>
 );
 

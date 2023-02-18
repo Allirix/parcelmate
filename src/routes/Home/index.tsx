@@ -1,10 +1,8 @@
-import Counter from '../../components/partials/Home/Counter';
-import Quote from '../../components/shareds/Quote';
+import Dashboard from '../../components/partials/Home/Dashboard';
 
 const Home = () => (
   <div className="Home">
-    <Counter />
-    <Quote />
+    <Dashboard />
   </div>
 );
 
