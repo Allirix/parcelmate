@@ -1,3 +1,5 @@
+[![Deploy Vite with GitHub Pages dependencies preinstalled](https://github.com/Allirix/parcelmate/actions/workflows/vite-gh-pages.yml/badge.svg)](https://github.com/Allirix/parcelmate/actions/workflows/vite-gh-pages.yml)
+
 <p align="center">
   <br>
   <img width="400" src="./src/assets/logo.svg" alt="logo of viterts repository">
