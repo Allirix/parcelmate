@@ -13,8 +13,9 @@ import {
 import { Button, Drawer, Input, Layout, Menu } from 'antd';
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import OpenModal from '../DeliveryModal/OpenModal';
 
-const { Header, Footer } = Layout;
+const { Header } = Layout;
 
 const AppShell = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ const AppShell = ({ children }: { children: ReactNode }) => {
           onKeyDown={handleSearchEnter}
         />
 
+        <OpenModal />
+
         <Button
           className="header-button"
           icon={<MenuOutlined />}
@@ -64,8 +67,6 @@ const AppShell = ({ children }: { children: ReactNode }) => {
       >
         {children}
       </Layout.Content>
-      <Footer>{2}</Footer>
-
       <Menu
         mode="horizontal"
         theme="dark"
