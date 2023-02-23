@@ -1,4 +1,7 @@
-import { DatePicker, Input, Space, Table } from 'antd';
+import DatePicker from 'antd/es/date-picker';
+import Input from 'antd/es/input';
+import Space from 'antd/es/space';
+import Table from 'antd/es/table';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
@@ -41,14 +44,14 @@ const HistoryPage = () => {
 
   const [filteredDeliveries, setFilteredDeliveries] = useState(deliveries);
 
-  const onRangePickerChange = (dates) => {
+  const onRangePickerChange = (dates: any) => {
     const filtered = deliveries.filter(
       (d) => dates[0] <= d.deliveryDate && d.deliveryDate <= dates[1],
     );
     setFilteredDeliveries(filtered);
   };
 
-  const onSearch = (value) => {
+  const onSearch = (value: string) => {
     const filtered = deliveries.filter(
       (d) => d.number.includes(value) || d.street.toLowerCase().includes(value.toLowerCase()),
     );
@@ -70,7 +73,7 @@ const HistoryPage = () => {
       title: 'Delivery Date',
       dataIndex: 'deliveryDate',
       key: 'deliveryDate',
-      render: (text) => format(text, 'dd/MM/yyyy'),
+      render: (text: number) => format(text, 'dd/MM/yyyy'),
     },
   ];
 

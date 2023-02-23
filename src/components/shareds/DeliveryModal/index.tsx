@@ -1,128 +1,46 @@
-import { AutoComplete, Button, Form, Input, Modal, Radio, Select, Steps } from 'antd';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Modal from 'antd/es/modal';
+import Steps from 'antd/es/steps';
+
 import { useState } from 'react';
 import { updateJSON } from '../../../common';
+import { AddressForm } from '../../../routes/Locations/Address';
+// import AddressForm from './Forms/AddressForm';
+import { Delivery } from '../../../store/types';
+import ParcelForm from './Forms/ParcelForm';
+import TagForm from './Forms/TagForm';
 
 const { Step } = Steps;
-const { Option } = Select;
-
-const AddressForm = ({ form, onNext }: any) => {
-  const [options, setOptions] = useState<any>([]);
-
-  const onSearch = (searchText: string) =>
-    setOptions(
-      !searchText ? [] : [{ value: '1 Main St' }, { value: '2 Main St' }, { value: '3 Main St' }],
-    );
-
-  return (
-    <Form form={form} onFinish={onNext}>
-      <Form.Item name="address" label="Address">
-        <AutoComplete
-          options={options}
-          onSearch={onSearch}
-          filterOption={(inputValue, option: any) =>
-            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-          }
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" onClick={onNext}>
-          Next
-        </Button>
-      </Form.Item>
-    </Form>
-  );
-};
-
-const ParcelForm = ({ form, onNext }: any) => (
-  <Form form={form} onFinish={onNext}>
-    <Form.Item name="count" label="Count">
-      <Input type="number" />
-    </Form.Item>
-    <Form.Item name="size" label="Size">
-      <Select>
-        <Option value="small">Small</Option>
-        <Option value="medium">Medium</Option>
-        <Option value="large">Large</Option>
-      </Select>
-    </Form.Item>
-    <Form.Item name="type" label="Type">
-      <Radio.Group>
-        <Radio value="box">Box</Radio>
-        <Radio value="bag">Bag</Radio>
-      </Radio.Group>
-    </Form.Item>
-    <Form.Item name="color" label="Color">
-      <Input />
-    </Form.Item>
-
-    <Form.Item>
-      <Button type="primary" onClick={onNext}>
-        Next
-      </Button>
-    </Form.Item>
-  </Form>
-);
-
-const TagForm = ({ form, onFinish }: any) => (
-  <Form form={form} onFinish={onFinish}>
-    <Form.Item name="tag" label="Tag">
-      <Input />
-    </Form.Item>
-    <Form.Item>
-      <Button type="primary" onClick={onFinish}>
-        Next
-      </Button>
-    </Form.Item>
-  </Form>
-);
 
 const steps = [
-  {
-    title: 'Set Address',
-    Content: AddressForm,
-  },
-  {
-    title: 'Get Parcel',
-    Content: ParcelForm,
-  },
-  {
-    title: 'Append Tag',
-    Content: TagForm,
-  },
+  { title: 'Address', Content: AddressForm },
+  { title: 'Parcels', Content: ParcelForm },
+  { title: 'Tags', Content: TagForm },
 ];
 
 const DeliveryModal = ({ visible, onCancel, startingStep = 0, startingDelivery = {} }: any) => {
-  const [deliveries, setDeliveries] = useState<any>([]);
+  const [, setDeliveries] = useState<any>({});
 
-  const onCreate = (values: any) => {
-    const delivery = {
-      id: deliveries.length + 1,
-      address: values.address,
-      count: values.count,
-      size: values.size,
-      type: values.type,
-      color: values.color,
-      tag: values.tag,
-    };
-    setDeliveries([...deliveries, delivery]);
+  const onCreate = (delivery: any) => {
+    setDeliveries((current: any) => ({ ...current, [delivery.address]: delivery }));
   };
 
   const [currentStep, setCurrentStep] = useState(startingStep);
   const [form] = Form.useForm();
 
-  const [delivery, setDelivery] = useState<any>(startingDelivery);
+  const [delivery, setDelivery] = useState<Delivery>(startingDelivery);
 
-  const handleNext = (e: any) => {
-    e.preventDefault();
+  const handleNext = (e: any, overwrite?: Partial<typeof delivery>) => {
+    e?.preventDefault?.();
     form.validateFields().then((values) => {
-      setDelivery((currDelivey: any) => updateJSON(currDelivey, values));
+      setDelivery((currDelivey: any) => updateJSON(currDelivey, overwrite || values));
       setCurrentStep(currentStep + 1);
     });
   };
 
   const handleFinish = (e: any) => {
-    e.preventDefault();
+    e?.preventDefault?.();
     form.validateFields().then((values) => {
       onCreate(updateJSON(delivery, values));
       form.resetFields();
@@ -132,14 +50,28 @@ const DeliveryModal = ({ visible, onCancel, startingStep = 0, startingDelivery =
 
   const { Content } = steps[currentStep];
 
+  const handleClose = () => {
+    onCancel();
+  };
+
   return (
-    <Modal open={visible} onCancel={onCancel} footer={null}>
-      <Steps current={currentStep}>
-        {steps.map((step) => (
-          <Step key={step.title} title={step.title} />
+    <Modal open={visible} onCancel={handleClose} footer={null} destroyOnClose style={{ top: 0 }}>
+      <Steps current={currentStep} size="small" type="inline">
+        {steps.map(({ title }) => (
+          <Step key={title} title={title} />
         ))}
       </Steps>
-      <Content form={form} onNext={handleNext} onFinish={handleFinish} />
+      <Content form={form} onNext={handleNext} onFinish={handleFinish}>
+        {currentStep === steps.length - 1 ? (
+          <Button type="primary" onClick={handleFinish}>
+            Next
+          </Button>
+        ) : (
+          <Button type="primary" onClick={handleNext}>
+            Next
+          </Button>
+        )}
+      </Content>
     </Modal>
   );
 };

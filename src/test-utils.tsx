@@ -2,15 +2,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
 import { render, RenderOptions } from '@testing-library/react';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, StrictMode } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './store';
 
 const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => (
-  <Provider store={store}>
-    <BrowserRouter>{children}</BrowserRouter>
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading="Loading...">
+        <BrowserRouter>{children}</BrowserRouter>
+      </PersistGate>
+    </Provider>
+  </StrictMode>
 );
 
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>

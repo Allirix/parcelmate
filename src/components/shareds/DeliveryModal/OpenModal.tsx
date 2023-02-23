@@ -1,5 +1,5 @@
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Button } from 'antd';
+import Button from 'antd/es/button';
 import { useState } from 'react';
 import DeliveryModal from '.';
 

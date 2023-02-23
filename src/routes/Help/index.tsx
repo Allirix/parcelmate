@@ -1,4 +1,5 @@
-import { Collapse, Typography } from 'antd';
+import Collapse from 'antd/es/collapse';
+import Typography from 'antd/es/typography';
 
 const { Panel } = Collapse;
 

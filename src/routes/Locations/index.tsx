@@ -1,5 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Affix, Button, Form, Modal, Tabs } from 'antd';
+import Affix from 'antd/es/affix';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Modal from 'antd/es/modal';
+import Tabs from 'antd/es/tabs';
+
 import { useState } from 'react';
 import { AddressForm, AddressTable } from './Address';
 import { LocationForm, LocationTable } from './Location';

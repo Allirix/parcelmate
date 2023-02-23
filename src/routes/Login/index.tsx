@@ -1,6 +1,10 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button, Divider, Form, Input, Typography } from 'antd';
+import Button from 'antd/es/button';
+import Divider from 'antd/es/divider';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Typography from 'antd/es/typography';
 
 const layout = {
   labelCol: {

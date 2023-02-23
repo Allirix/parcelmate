@@ -1,4 +1,6 @@
-import { Button, Form, Input } from 'antd';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
 
 const SignupPage = () => {
   const onFinish = (values: unknown) => {

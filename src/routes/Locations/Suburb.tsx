@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-import { Button, Form, Input, Space, Table } from 'antd';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Space from 'antd/es/space';
+import Table from 'antd/es/table';
 import {
   useAddSuburb,
   useRemoveSuburb,

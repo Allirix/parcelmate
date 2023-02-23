@@ -1,4 +1,7 @@
-import { Button, Form, Input, Switch } from 'antd';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Switch from 'antd/es/switch';
 
 function Settings() {
   const onFinish = (values: unknown) => {

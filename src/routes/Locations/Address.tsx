@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { AutoComplete, Button, Form, Input, Space, Table } from 'antd';
+import AutoComplete from 'antd/es/auto-complete';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Space from 'antd/es/space';
+import Table from 'antd/es/table';
 import {
   useAddAddress,
   useAddressList,
   useRemoveAddress,
 } from '../../store/selectors/addresses.selector';
 import { useLocationList } from '../../store/selectors/locations.selector';
-import { Address, FullAddress, Location } from '../../store/types';
-import { getLocationId } from '../../store/utils';
+import { FullAddress } from '../../store/types';
+import { getAddressId, getLocationId } from '../../store/utils';
+import { splitAddress } from './utils';
 
 const { Column } = Table;
 
@@ -79,43 +85,68 @@ export function AddressTable() {
   );
 }
 
-export function AddressForm({ form, close }: any) {
+export function AddressForm({ form, close = () => {}, onNext = () => {}, children }: any) {
   const addAddress = useAddAddress();
 
   const locationList = useLocationList();
 
-  const [options, setOptions] = useState<Location[]>([]);
+  const [options, setOptions] = useState<FullAddress[]>(
+    locationList.map((location) => ({
+      ...location,
+      number: '',
+      locationId: getLocationId({ ...location }),
+    })) as FullAddress[],
+  );
 
-  const handleSearch = (value: string) => {
-    const filteredOptions = locationList.filter((location) =>
-      getLocationId(location).toLowerCase().startsWith(value.toLowerCase()),
-    );
+  const handleSearch = (searchTerm: string) => {
+    const { number, locationId: locationSearch } = splitAddress(searchTerm);
+
+    const filteredOptions = locationList
+      .filter((location) =>
+        getLocationId(location).toLowerCase().startsWith(locationSearch.toLowerCase()),
+      )
+      .map(
+        (location): FullAddress => ({ ...location, number, locationId: getLocationId(location) }),
+      );
     setOptions(filteredOptions);
   };
 
-  const handleSubmit = (values: Address) => {
-    console.log(values);
-    addAddress(values);
+  const handleSubmit = async (e: any) => {
+    const { locationId: location } = await form.validateFields();
+
+    addAddress(splitAddress(location));
+    onNext(e);
     close();
   };
 
+  const inputRef = useRef<any>(null); // Create a ref to the input field
+
+  useEffect(() => {
+    inputRef.current?.focus(); // Set focus to the input field when the component mounts
+  }, [close]);
+
   return (
     <Form form={form} onFinish={handleSubmit}>
-      <Form.Item label="Number" name="number">
-        <Input type="number" />
-      </Form.Item>
-
       <Form.Item label="Location" name="locationId">
         <AutoComplete
-          options={options.map((location: Location) => ({
-            value: getLocationId(location),
+          options={options.map((location) => ({
+            value: getAddressId(location),
           }))}
           onSearch={handleSearch}
-          onSelect={(value) => form.setFieldsValue({ locationId: value })}
+          onSelect={(locationId) => {
+            form.setFieldsValue({ locationId });
+            handleSubmit('');
+          }}
         >
-          <Input placeholder="Search locations" />
+          <Input placeholder="Search locations" ref={inputRef} />
         </AutoComplete>
       </Form.Item>
+
+      {children && (
+        <Button type="primary" onClick={handleSubmit}>
+          Next
+        </Button>
+      )}
     </Form>
   );
 }

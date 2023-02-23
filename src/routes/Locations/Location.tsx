@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-import { Button, Form, Input, Select, Space, Table } from 'antd';
+import Button from 'antd/es/button';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Select from 'antd/es/select';
+import Space from 'antd/es/space';
+import Table from 'antd/es/table';
 import {
   useAddLocation,
   useLocationList,

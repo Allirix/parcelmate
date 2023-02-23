@@ -1,6 +1,10 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable react/require-default-props */
-import { Card, Col, Row, Statistic, Typography } from 'antd';
+import Card from 'antd/es/card';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Statistic from 'antd/es/statistic';
+import Typography from 'antd/es/typography';
 
 import { Line } from 'react-chartjs-2';
 

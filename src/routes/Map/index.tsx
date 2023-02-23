@@ -1,5 +1,5 @@
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { Table } from 'antd';
+import Table from 'antd/es/table';
 import { useState } from 'react';
 import { useGeolocation } from 'react-use';
 

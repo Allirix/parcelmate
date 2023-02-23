@@ -1,15 +1,16 @@
 import type { Address, Delivery, Location, SuburbItem } from './types';
+import { FullAddress } from './types';
 
 export function getSuburbId(suburb: SuburbItem | string) {
   return typeof suburb === 'object' ? suburb.name : suburb;
 }
 
-export function getLocationId({ name, type, suburb }: Location) {
+export function getLocationId({ name, type, suburb }: FullAddress | Location) {
   return `${name} ${type} ${suburb}`;
 }
 
-export function getAddressId(address: Address) {
-  return `${address.number} ${address.locationId}`;
+export function getAddressId(address: FullAddress | Address) {
+  return `${address.number} ${address.locationId}`.trim();
 }
 
 export function getDeliveryId(delivery: Delivery, delivered = false) {

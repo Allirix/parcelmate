@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import viteCompression from 'vite-plugin-compression';
 import eslint from 'vite-plugin-eslint';
 
 import { VitePWA } from 'vite-plugin-pwa';
@@ -9,6 +10,7 @@ export default defineConfig({
   plugins: [
     eslint({ cache: false }),
     react(),
+    viteCompression(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: { enabled: true },

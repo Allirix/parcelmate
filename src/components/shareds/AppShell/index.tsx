@@ -10,7 +10,12 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Button, Drawer, Input, Layout, Menu } from 'antd';
+import Button from 'antd/es/button';
+import Drawer from 'antd/es/drawer';
+import Input from 'antd/es/input';
+import Layout from 'antd/es/layout';
+import Menu from 'antd/es/menu';
+
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OpenModal from '../DeliveryModal/OpenModal';
